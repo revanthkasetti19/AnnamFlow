@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123c32">
+  <meta name="description" content="Annam Foods order, production, inventory and audit workspace.">
+  <title>Annam Foods | Order to Audit</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">அ</div>
+      <div><b>ANNAM FOODS</b><small>Order to Audit</small></div>
+    </div>
+    <div class="workspace-label">WORKSPACE</div>
+    <nav id="nav" aria-label="Main navigation"></nav>
+    <div class="side-bottom">
+      <div class="avatar" aria-hidden="true">AF</div>
+      <div><b id="userName">Factory Admin</b><small id="userRole">Administrator</small></div>
+      <button id="roleSwitch" type="button" title="Switch workspace role" aria-label="Switch workspace role">↕</button>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <div class="crumb">ANNAM FOODS <span>/</span> <b id="sectionName">Overview</b></div>
+        <h1 id="pageTitle">Good morning, team</h1>
+      </div>
+      <div class="top-actions">
+        <button id="resetBtn" class="icon-btn" type="button" onclick="resetDemo()" title="Reset benchmark data" aria-label="Reset benchmark data">↻</button>
+        <button class="profile" id="profile" type="button" onclick="openRoleSwitcher()" aria-label="Switch workspace role">AF</button>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="welcome" id="welcome">
+        <div>
+          <span class="eyebrow" id="currentDate"></span>
+          <h2>One clear view of the whole factory.</h2>
+          <p>Track orders, production, stock, and collections from one connected workspace.</p>
+        </div>
+        <div class="welcome-icon" aria-hidden="true">✳</div>
+      </div>
+      <div id="app" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <div id="switcher" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="switcherTitle">
+    <div class="modal-card">
+      <button class="close" type="button" onclick="toggleSwitch(false)" aria-label="Close role switcher">×</button>
+      <span class="eyebrow">DEMO ACCESS</span>
+      <h2 id="switcherTitle">Switch workspace role</h2>
+      <p>Explore the app as each person in the workflow.</p>
+      <div id="roleOptions" class="role-options"></div>
+    </div>
+  </div>
+
+  <div id="paymentDialog" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
+    <div class="modal-card">
+      <button class="close" type="button" onclick="closePayment()" aria-label="Close payment dialog">×</button>
+      <span class="eyebrow">CUSTOMER COLLECTION</span>
+      <h2 id="paymentTitle">Record a payment</h2>
+      <p id="paymentContext"></p>
+      <label class="field">
+        <span>Amount received (₹)</span>
+        <input id="paymentAmount" type="number" min="0.01" step="0.01" required>
+      </label>
+      <div class="actions payment-actions">
+        <button class="btn secondary" type="button" onclick="closePayment()">Cancel</button>
+        <button class="btn" type="button" onclick="recordPayment()">Record collection</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="loginScreen" class="login-screen hidden" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <form id="loginPanel" class="login-card" onsubmit="login(event)">
+      <div class="brand-mark" aria-hidden="true">அ</div>
+      <span class="eyebrow">ANNAM FOODS · ORDER TO AUDIT</span>
+      <h1 id="loginTitle">Sign in to your workspace</h1>
+      <p>Sign in with your account or create a Sales account.</p>
+      <label class="field">
+        <span>Username</span>
+        <input id="loginUser" name="username" autocomplete="username" required>
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <p id="loginError" class="login-error" role="alert"></p>
+      <button class="btn login-submit" type="submit">Sign in</button>
+      <button class="auth-link" type="button" onclick="showRegistration()">Create a new account</button>
+      <small>Demo accounts remain available for evaluation. New public accounts have Sales access until an admin assigns customers.</small>
+    </form>
+
+    <form id="registerPanel" class="login-card" onsubmit="registerAccount(event)" hidden>
+      <div class="brand-mark" aria-hidden="true">அ</div>
+      <span class="eyebrow">ANNAM FOODS · NEW ACCOUNT</span>
+      <h1 id="registerTitle">Create your account</h1>
+      <p>Public accounts start with Sales access. An admin must assign your customer route before you can place orders.</p>
+      <label class="field">
+        <span>Display name</span>
+        <input id="registerDisplay" name="display_name" autocomplete="name" maxlength="80" required>
+      </label>
+      <label class="field">
+        <span>Username</span>
+        <input id="registerUser" name="username" autocomplete="username" minlength="3" maxlength="30" pattern="[A-Za-z0-9][A-Za-z0-9._-]{2,29}" required>
+      </label>
+      <label class="field">
+        <span>Password (12–128 characters)</span>
+        <input id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+      </label>
+      <label class="field">
+        <span>Confirm password</span>
+        <input id="registerConfirm" name="password_confirm" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+      </label>
+      <p id="registerError" class="login-error" role="alert"></p>
+      <button class="btn login-submit" type="submit">Create account</button>
+      <button class="auth-link" type="button" onclick="showLogin()">Back to sign in</button>
+    </form>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

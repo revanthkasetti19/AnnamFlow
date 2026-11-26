@@ -1,0 +1,10 @@
+services:
+  order-audit:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - order-audit-data:/data
+    restart: unless-stopped
+volumes:
+  order-audit-data:
